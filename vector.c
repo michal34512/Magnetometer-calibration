@@ -1,4 +1,5 @@
 #include "vector.h"
+
 #include "assert.h"
 #include "stdlib.h"
 #include "stdio.h"
@@ -53,20 +54,28 @@ void vec_multiply_scalar(Vector vecA, double val) {
         VEC_ELEM(vecA, i) *= val;
     }
 }
+void vec_add(Vector vecA, Vector vecB) {
+    assert(vecA->size == vecB->size);
+    for (int i = 0; i < vecA->size; i++) {
+        VEC_ELEM(vecA, i) += VEC_ELEM(vecB, i);
+    }
+}
 void vec_sub(Vector vecA, Vector vecB) {
     assert(vecA->size == vecB->size);
     for (int i = 0; i < vecA->size; i++) {
         VEC_ELEM(vecA, i) -= VEC_ELEM(vecB, i);
     }
 }
-double vec_norm(Vector vecA) {
+double vec_norm_square(Vector vecA) {
     double res = 0;
     for (int i = 0; i < vecA->size; i++) {
         res += VEC_ELEM(vecA, i) * VEC_ELEM(vecA, i);
     }
-    return sqrt(res);
+    return res;
 }
-
+double vec_norm(Vector vecA) {
+    return sqrt(vec_norm_square(vecA));
+}
 float vec_angle_between(Vector vecA, Vector vecB) {
     return acos((VEC_X(vecA) * VEC_X(vecB) + VEC_Y(vecA) * VEC_Y(vecB) + VEC_Z(vecA) * VEC_Z(vecB)) / sqrt(
             (VEC_X(vecA) * VEC_X(vecA) + VEC_Y(vecA) * VEC_Y(vecA) + VEC_Z(vecA) * VEC_Z(vecA)) *
@@ -137,11 +146,19 @@ bool vec_equal(Vector vecA, Vector vecB, double tol) {
     return true;
 }
 
+bool vec_check_nan(Vector vecA) {
+    for (int i = 0; i < vecA->size; i++) {
+        if (VEC_ELEM(vecA, i) != VEC_ELEM(vecA, i))
+            return true;
+    }
+    return false;
+}
+
 void vec_print(Vector vecA) {
     if (vecA == NULL) return;
     printf("[");
     for (int i = 0; i < vecA->size; i++) {
-        printf("%.3f, ", VEC_ELEM(vecA, i));
+        printf("%.10f, ", VEC_ELEM(vecA, i));
     }
     printf("]\n");
 }

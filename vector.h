@@ -22,7 +22,9 @@ void vec_fill(Vector vecA, double val);
 
 double vec_dot_product(Vector vecA, Vector vecB);
 void vec_multiply_scalar(Vector vecA, double val);
+void vec_add(Vector vecA, Vector vecB);
 void vec_sub(Vector vecA, Vector vecB);
+double vec_norm_square(Vector vecA);
 double vec_norm(Vector vecA);
 
 float vec_angle_between(Vector vecA, Vector vecB);
@@ -36,6 +38,7 @@ void vec_rotate_z(Vector vec, float rad);
 
 bool vec_contains(Vector vecA, double val, double tol);
 bool vec_equal(Vector vecA, Vector vecB, double tol);
+bool vec_check_nan(Vector vecA);
 
 void vec_print(Vector vecA);
 

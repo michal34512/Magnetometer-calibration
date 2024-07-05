@@ -1,4 +1,5 @@
 #include "eigen.h"
+
 #include "stdlib.h"
 #include "assert.h"
 #include "qr.h"
@@ -48,7 +49,7 @@ Vector eigen_backsolve(Matrix matA, double eigVal) {
     mat_sub(matMinusLambda, matLambda);
     mat_free(matLambda);
 
-    double i = 0;
+    int i = 0;
     do {
         if (i > 0) {
             vec_free(previous);

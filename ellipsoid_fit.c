@@ -1,9 +1,10 @@
 #include "ellipsoid_fit.h"
+
 #include "assert.h"
 #include "matrix.h"
 #include "eigen.h"
 
-#define ALPHA 4
+#define ALPHA 16
 
 Matrix ellipsoid_generate_data_mat(Vector x, Vector y, Vector z) {
     assert(x->size == y->size);

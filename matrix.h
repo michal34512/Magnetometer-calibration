@@ -1,7 +1,6 @@
 #ifndef COMPONENTS_GEOMETRY_MATRIX_H_
 #define COMPONENTS_GEOMETRY_MATRIX_H_
 
-#include "matrix.h"
 #include "vector.h"
 
 #define MAT_ELEM(MAT, ROW, COLUMN) MAT->data[(COLUMN) + (ROW)*MAT->columns]
@@ -36,8 +35,10 @@ Vector vec_multiply_mat(Vector vecA, Matrix matB);
 void mat_add(Matrix matA, Matrix matB);
 void mat_sub(Matrix matA, Matrix matB);
 Matrix mat_transpose(Matrix matA);
+void mat_orthogonalize(Matrix matA);
 
 bool mat_is_upper_triang(Matrix matA, double tol);
+bool mat_check_nan(Matrix matA);
 
 Vector mat_linsolve_upperr_triang(Matrix R, Vector b);
 bool mat_inv_4x4(Matrix matA);

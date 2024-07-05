@@ -1,8 +1,9 @@
 #include "matrix.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <assert.h>
-#include <math.h>
+
+#include "stdlib.h"
+#include "stdio.h"
+#include "assert.h"
+#include "math.h"
 
 Matrix mat_new(const unsigned int rows, const unsigned int columns) {
     Matrix res = malloc(sizeof(Matrix_t));
@@ -160,6 +161,21 @@ Matrix mat_transpose(Matrix matA) {
     }
     return res;
 }
+void mat_orthogonalize(Matrix matA) {
+    assert(matA->rows == matA->columns);
+    for (int i = 1; i < matA->columns; i++) {
+        Vector column = mat_copy_column(matA, i);
+        for (int j = 1; j < i; j++) {
+            Vector prevColumn =  mat_copy_column(matA, j);
+            vec_multiply_scalar(prevColumn, vec_dot_product(prevColumn, column));
+            vec_sub(column, prevColumn);
+            vec_free(prevColumn);
+        }
+        vec_normalize(column);
+        mat_paste_column(matA, column, i);
+        vec_free(column);
+    }
+}
 bool mat_is_upper_triang(Matrix matA, double tol) {
     assert(matA->rows == matA->columns);
 
@@ -171,6 +187,14 @@ bool mat_is_upper_triang(Matrix matA, double tol) {
         }
     }
     return true;
+}
+
+bool mat_check_nan(Matrix matA) {
+    for (int i = 0; i < matA->rows*matA->columns; i++) {
+        if (MAT_ELEM_FLAT(matA, i) != MAT_ELEM_FLAT(matA, i))
+            return true;
+    }
+    return false;
 }
 
 Vector mat_linsolve_upperr_triang(Matrix R, Vector b) {
