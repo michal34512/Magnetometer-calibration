@@ -1,5 +1,5 @@
 # Magnetometer calibration
- magnetometer calibration algorithm with light weight linear algebra library
+Magnetometer calibration algorithm with light weight linear algebra library
 ![image](https://github.com/michal34512/Magnetometer-calibration/assets/136522993/7fc41cf1-9d9d-41d6-8e2c-825d0499b35d)
 
 # How to use
@@ -27,5 +27,8 @@ mat_print(calib.transform);
 calib_calibrate_point(calib, new_data_vector);
 ```
 # Algorithm perfomance
-Average variance of points length in relation to calibration data noise:
+Average variance of points length in relation to calibration data noise (random mag. 100 data points):
 ![image](https://github.com/michal34512/Magnetometer-calibration/assets/136522993/a787f111-d35e-47f4-a695-2f152841c7c6)
+
+Average chance of algorithm failure in relation to data point count (random mag. data with 10% noise):
+![image](https://github.com/michal34512/Magnetometer-calibration/assets/136522993/df975675-cb75-4c7f-963d-f025fb2569e8)
