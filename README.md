@@ -28,7 +28,11 @@ calib_calibrate_point(calib, new_data_vector);
 ```
 # Algorithm perfomance
 Average variance of points length in relation to calibration data noise (random mag. 100 data points):
-![image](https://github.com/michal34512/Magnetometer-calibration/assets/136522993/a787f111-d35e-47f4-a695-2f152841c7c6)
+![image](https://github.com/michal34512/Magnetometer-calibration/assets/136522993/df930068-2c8a-4ca8-b1ef-d4f1a6730eee)
 
 Average chance of algorithm failure in relation to data point count (random mag. data with 10% noise):
 ![image](https://github.com/michal34512/Magnetometer-calibration/assets/136522993/df975675-cb75-4c7f-963d-f025fb2569e8)
+
+Example of data calibration with 50% noise:
+![image](https://github.com/michal34512/Magnetometer-calibration/assets/136522993/9752cadd-9f7c-496e-8559-d9e351b3e218)
+
