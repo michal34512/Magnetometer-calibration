@@ -5,7 +5,6 @@ Magnetometer calibration algorithm with light weight linear algebra library
 # How to use
 ```c
 // data arrays
-
 double x[231] = {18.923634, 20.785405, 23.265396, ...};
 double y[231] = {94.943907, 103.939205, 113.472091, ...};
 double z[231] = {27.951207, 32.958822, 31.772349, ...};
@@ -22,9 +21,16 @@ Callibration_t calib = calib_calibrate_sensor(vx, vy, vz);
 vec_print(calib.offset);
 mat_print(calib.transform);
 
-// Compensate data based on calib
+// Compensate new data point based on calib
 // new data = calib.transform*(old data - calib.offset)
+Vector new_data_vector = vec_new(3);
+VEC_X(new_data_vector) = 18.923634;
+VEC_Y(new_data_vector) = 94.943907;
+VEC_Z(new_data_vector) = 27.951207;
 calib_calibrate_point(calib, new_data_vector);
+
+// Print calibrated vector
+vec_print(new_data_vector);
 ```
 # Algorithm perfomance
 Average variance of points length in relation to calibration data noise (random mag. 100 data points):
