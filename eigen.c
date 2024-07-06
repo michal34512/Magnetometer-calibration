@@ -6,7 +6,7 @@
 
 #define EIGEN_TOLERANCE 1.0E-6
 #define EIGEN_SINGULARITY_TOLERANCE 1.0E-10
-#define EIGEN_MAX_ITER 10000
+#define EIGEN_MAX_ITER 100
 
 Vector eig_solve_eigenvalues(Matrix M) {
     Matrix X = mat_copy(M);

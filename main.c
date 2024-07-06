@@ -69,7 +69,7 @@ mag_generated_data_t generate_mag_data(int n) {
         vec_normalize(point);
         
         // Add noise
-        vec_multiply_scalar(point, ((float)rand() / (float)RAND_MAX) * MAX_NOISE + 1);
+        vec_multiply_scalar(point, (((float)rand() / (float)RAND_MAX) * 2 - 1) * MAX_NOISE + 1);
 
         // Data on ellipsoid
         Vector pointElip = mat_multiply_vec(rotationGain, point);
