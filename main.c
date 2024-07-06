@@ -6,9 +6,9 @@
 
 // THIS A DEMO OF MAGNETOMETER CALIBRATION. DEMO CONSISTS OF:
 // 1. Generating random mangetometer data (which you would normally read from the sensor)
-// 2. Calculating callibration data (which can be later used to calibrate new data points)
-// 3. Checking if calculating callibration data was successful
-// 4. Calibrating data points previously used for calibration prosses
+// 2. Calculating calibration data (which can be later used to calibrate new data points)
+// 3. Checking if calculating calibration data was successful
+// 4. Calibrating data points previously used for calibration process
 
 typedef struct {
     Vector vx;
@@ -91,7 +91,7 @@ int main() {
     // Simulate random magnetometer data (length range: MAX_DATA_LEN - MIN_DATA_LEN)
     mag_generated_data_t data = generate_mag_data((int)(((float)rand() / (float)RAND_MAX) * (MAX_DATA_LEN - MIN_DATA_LEN)) + MIN_DATA_LEN);
     
-    // Calulate callibration data (offset vector and transformation matrix)
+    // Calulate calibration data (offset vector and transformation matrix)
     Callibration_t calib = calib_calibrate_sensor(data.vx, data.vy, data.vz);
 
     // Calibration might sometimes be unsuccessful (when there is not enough data points, or when it's impossible to fit an ellipsoid to these points)
