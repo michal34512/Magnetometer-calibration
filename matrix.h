@@ -29,6 +29,7 @@ void mat_fill_diag(Matrix matA, double val);
 void mat_rewrite(Matrix matA, Matrix matB);
 
 Matrix mat_multiply(Matrix matA, Matrix matB);
+void mat_multiply_vec3_into(Matrix matA, Vector vecB);
 Matrix mat_multiply_MMT(Matrix matA);
 Vector mat_multiply_vec(Matrix matA, Vector vecB);
 Vector vec_multiply_mat(Vector vecA, Matrix matB);

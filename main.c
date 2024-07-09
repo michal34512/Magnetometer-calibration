@@ -97,11 +97,20 @@ int main() {
     // Calibration might sometimes be unsuccessful (when there is not enough data points, or when it's impossible to fit an ellipsoid to these points)
     printf("Calculating calibration data of data points was %s\n", calib_calibration_success(calib) ? "SUCCESFUL" : "UNSUCCESFUL");
 
+    // Print variance before calibration
     printf("Variance of distances before calibration: %f\n", square_distance_variance(data.vx, data.vy, data.vz));
 
-    // Calibrate generated points
+    // Calibrate single point (example)
+    Vector dataPoint = vec_new(3);
+    VEC_X(dataPoint) = VEC_ELEM(data.vx, 0);
+    VEC_Y(dataPoint) = VEC_ELEM(data.vy, 0);
+    VEC_Z(dataPoint) = VEC_ELEM(data.vz, 0);
+    calib_calibrate_point(calib, dataPoint);
+
+    // Calibrate generated data points (example)
     calib_calibrate_multiple_points(calib, data.vx, data.vy, data.vz);
 
+    // Print variance after calibration
     printf("Variance of distances after calibration: %f\n", square_distance_variance(data.vx, data.vy, data.vz));
 
     // Free allocated data

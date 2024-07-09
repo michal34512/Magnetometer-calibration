@@ -104,6 +104,16 @@ Matrix mat_multiply(Matrix matA, Matrix matB) {
     }
     return res;
 }
+void mat_multiply_vec3_into(Matrix matA, Vector vecB) {
+    assert(vecB->size == matA->columns);
+    assert(matA->rows == matA->columns);
+
+    double tempX = VEC_X(vecB);
+    double tempY = VEC_Y(vecB);
+    VEC_X(vecB) = MAT_ELEM(matA, 0, 0) * tempX + MAT_ELEM(matA, 0, 1) * tempY + MAT_ELEM(matA, 0, 2) * VEC_Z(vecB);
+    VEC_Y(vecB) = MAT_ELEM(matA, 1, 0) * tempX + MAT_ELEM(matA, 1, 1) * tempY + MAT_ELEM(matA, 1, 2) * VEC_Z(vecB);
+    VEC_Z(vecB) = MAT_ELEM(matA, 2, 0) * tempX + MAT_ELEM(matA, 2, 1) * tempY + MAT_ELEM(matA, 2, 2) * VEC_Z(vecB);
+}
 Matrix mat_multiply_MMT(Matrix matA) {
     Matrix res = mat_new(matA->rows, matA->rows);
     for (int i = 0; i < res->rows; i++) {

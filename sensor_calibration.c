@@ -101,7 +101,7 @@ void calib_calibrate_multiple_points(Callibration_t calib, Vector x, Vector y, V
 
 void calib_calibrate_point(Callibration_t calib, Vector point) {
     vec_sub(point, calib.offset);
-    vec_replace(point, mat_multiply_vec(calib.transorm, point));
+    mat_multiply_vec3_into(calib.transorm, point);
 }
 
 double square_distance_variance(Vector x, Vector y, Vector z) {
