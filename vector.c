@@ -12,7 +12,7 @@ Vector vec_new(unsigned int size) {
     return res;
 }
 
-Vector vec_from_array(double *array, unsigned int size) {
+Vector vec_from_array(const double *array, unsigned int size) {
     Vector res = malloc(sizeof(Vector_t));
     res->size = size;
     res->data = array;

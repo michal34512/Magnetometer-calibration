@@ -24,7 +24,7 @@ Matrix calib_ellipsoid_matrix(Vector coefA) {
 
 Matrix calib_calibrate_rotation(Matrix ellipMat, Vector prq, double d) {
     Eigen_t eig = eig_solve(ellipMat);
-    mat_orthogonalize(eig.eigenvectors); // compensating inaccuracy
+    mat_orthogonalize(eig.eigenvectors);  // compensating inaccuracy
     Matrix rotation = mat_transpose(eig.eigenvectors);
     Matrix rotatedEllipMat = mat_multiply(rotation, ellipMat);
     Matrix diagonizedEllipMat = mat_multiply(rotatedEllipMat, eig.eigenvectors);
@@ -61,14 +61,14 @@ Vector calib_calibrate_offset(Matrix ellipMat, Vector prq) {
 Callibration_t calib_calibrate_sensor(Vector x, Vector y, Vector z) {
     Callibration_t res;
     res.offset = (Vector)0;
-    res.transorm = (Matrix)0;
+    res.transform = (Matrix)0;
     if (x->size < 6) return res;
     Ellipsoid_t ellip = ellipsoid_fit(x, y, z);
     Matrix M = calib_ellipsoid_matrix(ellip.coefA);
     Vector prq = vec_copy_subvec(ellip.coefB, 0, 3);
     double d = ellip.coefB->data[3];
     ellipsoid_free(ellip);
-    res.transorm = calib_calibrate_rotation(M, prq, d);
+    res.transform = calib_calibrate_rotation(M, prq, d);
     res.offset = calib_calibrate_offset(M, prq);
     mat_free(M);
     vec_free(prq);
@@ -76,13 +76,13 @@ Callibration_t calib_calibrate_sensor(Vector x, Vector y, Vector z) {
 }
 
 bool calib_calibration_success(Callibration_t calib) {
-    return !(vec_check_nan(calib.offset) || mat_check_nan(calib.transorm));
+    return !(vec_check_nan(calib.offset) || mat_check_nan(calib.transform));
 }
 
 void calib_calibrate_multiple_points(Callibration_t calib, Vector x, Vector y, Vector z) {
     assert(x->size == y->size);
     assert(x->size == z->size);
-    
+
     for (int i = 0; i < x->size; i++) {
         VEC_ELEM(x, i) = VEC_ELEM(x, i) - VEC_ELEM(calib.offset, 0);
         VEC_ELEM(y, i) = VEC_ELEM(y, i) - VEC_ELEM(calib.offset, 1);
@@ -93,15 +93,18 @@ void calib_calibrate_multiple_points(Callibration_t calib, Vector x, Vector y, V
         tempX = VEC_ELEM(x, i);
         tempY = VEC_ELEM(y, i);
 
-        VEC_ELEM(x, i) = tempX * MAT_ELEM(calib.transorm, 0, 0) + tempY * MAT_ELEM(calib.transorm, 0, 1) + VEC_ELEM(z, i) * MAT_ELEM(calib.transorm, 0, 2);
-        VEC_ELEM(y, i) = tempX * MAT_ELEM(calib.transorm, 1, 0) + tempY * MAT_ELEM(calib.transorm, 1, 1) + VEC_ELEM(z, i) * MAT_ELEM(calib.transorm, 1, 2);
-        VEC_ELEM(z, i) = tempX * MAT_ELEM(calib.transorm, 2, 0) + tempY * MAT_ELEM(calib.transorm, 2, 1) + VEC_ELEM(z, i) * MAT_ELEM(calib.transorm, 2, 2);
+        VEC_ELEM(x, i) = tempX * MAT_ELEM(calib.transform, 0, 0) + tempY * MAT_ELEM(calib.transform, 0, 1) +
+                        VEC_ELEM(z, i) * MAT_ELEM(calib.transform, 0, 2);
+        VEC_ELEM(y, i) = tempX * MAT_ELEM(calib.transform, 1, 0) + tempY * MAT_ELEM(calib.transform, 1, 1) +
+                        VEC_ELEM(z, i) * MAT_ELEM(calib.transform, 1, 2);
+        VEC_ELEM(z, i) = tempX * MAT_ELEM(calib.transform, 2, 0) + tempY * MAT_ELEM(calib.transform, 2, 1) +
+                        VEC_ELEM(z, i) * MAT_ELEM(calib.transform, 2, 2);
     }
 }
 
 void calib_calibrate_point(Callibration_t calib, Vector point) {
     vec_sub(point, calib.offset);
-    mat_multiply_vec3_into(calib.transorm, point);
+    mat_multiply_vec3_into(calib.transform, point);
 }
 
 double square_distance_variance(Vector x, Vector y, Vector z) {
@@ -126,5 +129,5 @@ double square_distance_variance(Vector x, Vector y, Vector z) {
 
 void calib_free(Callibration_t calibA) {
     vec_free(calibA.offset);
-    mat_free(calibA.transorm);
+    mat_free(calibA.transform);
 }

@@ -8,13 +8,16 @@
 #define VEC_Y(VEC) VEC->data[1]
 #define VEC_Z(VEC) VEC->data[2]
 
+#define VEC_TO_TABLE(VEC, STRUCT) for (int ITER = 0; ITER < 3; ITER++) {STRUCT[ITER] = VEC_ELEM(VEC, ITER);}
+#define TABLE_TO_VEC(VEC, STRUCT) for (int ITER = 0; ITER < 3; ITER++) {VEC_ELEM(VEC, ITER) = STRUCT[ITER];}
+
 typedef struct {
     unsigned int size;
     double *data;
 } Vector_t, *Vector;
 
 Vector vec_new(unsigned int size);
-Vector vec_from_array(double *array, unsigned int size);
+Vector vec_from_array(const double *array, unsigned int size);
 Vector vec_copy_subvec(Vector vecA, unsigned int felem, unsigned int elems);
 void vec_replace(Vector vecA, Vector vecB);
 

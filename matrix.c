@@ -35,7 +35,7 @@ Matrix mat_copy_submat(Matrix matA, const unsigned int frow, const unsigned int 
     }
     return res;
 }
-Matrix mat_from_array(double *array, const unsigned int rows, const unsigned int columns) {
+Matrix mat_from_array(const double *array, const unsigned int rows, const unsigned int columns) {
     Matrix res = malloc(sizeof(Matrix_t));
     res->rows = columns;
     res->columns = columns;

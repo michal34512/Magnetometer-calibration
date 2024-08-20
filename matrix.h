@@ -6,6 +6,9 @@
 #define MAT_ELEM(MAT, ROW, COLUMN) MAT->data[(COLUMN) + (ROW)*MAT->columns]
 #define MAT_ELEM_FLAT(MAT, ID) MAT->data[(ID)]
 
+#define MAT_TO_TABLE(MAT, STRUCT) for (int ITER = 0; ITER < 9; ITER++) {STRUCT[ITER] = MAT_ELEM_FLAT(MAT, ITER);}
+#define TABLE_TO_MAT(MAT, STRUCT) for (int ITER = 0; ITER < 9; ITER++) {MAT_ELEM_FLAT(MAT, ITER) = STRUCT[ITER];}
+
 typedef struct {
     unsigned int rows;
     unsigned int columns;
@@ -17,7 +20,7 @@ Matrix mat_new_I(const unsigned int rowsColumns);
 Matrix mat_copy(Matrix matA);
 Matrix mat_copy_submat(Matrix matA, const unsigned int frow, const unsigned int fcolumn,
                                     const unsigned int rows, const unsigned int columns);
-Matrix mat_from_array(double *array, const unsigned int rows, const unsigned int columns);
+Matrix mat_from_array(const double *array, const unsigned int rows, const unsigned int columns);
 void mat_replace(Matrix matA, Matrix matB);
 
 Vector mat_copy_column(Matrix matA, const unsigned int column);

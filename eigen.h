@@ -1,8 +1,8 @@
 #ifndef COMPONENTS_GEOMETRY_EIGEN_H_
 #define COMPONENTS_GEOMETRY_EIGEN_H_
 
-#include "Matrix.h"
-#include "Vector.h"
+#include "matrix.h"
+#include "vector.h"
 
 typedef struct {
     Vector eigenvalues;

@@ -7,7 +7,7 @@
 
 typedef struct {
     Vector offset;
-    Matrix transorm;
+    Matrix transform;
 } Callibration_t;
 
 Callibration_t calib_calibrate_sensor(Vector x, Vector y, Vector z);
