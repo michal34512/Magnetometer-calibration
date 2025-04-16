@@ -107,6 +107,15 @@ int main() {
     VEC_Z(dataPoint) = VEC_ELEM(data.vz, 0);
     calib_calibrate_point(calib, dataPoint);
 
+    // Additional - compensate magnetic declination and inclination
+    Vector gravity = vec_new(3);
+    VEC_X(gravity) = 0;
+    VEC_Y(gravity) = 0;
+    VEC_Z(gravity) = 1;
+    double declination = 5.9;
+    double inclination = 68.2;
+    wmm_compensate(dataPoint, gravity, declination, inclination);
+
     // Calibrate generated data points (example)
     calib_calibrate_multiple_points(calib, data.vx, data.vy, data.vz);
 
@@ -118,5 +127,6 @@ int main() {
     vec_free(data.vx);
     vec_free(data.vy);
     vec_free(data.vz);
+    vec_free(gravity);
     return 0;
 }
