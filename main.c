@@ -112,8 +112,8 @@ int main() {
     VEC_X(gravity) = 0;
     VEC_Y(gravity) = 0;
     VEC_Z(gravity) = 1;
-    double declination = 5.9;
-    double inclination = 68.2;
+    double declination = 5.9; // See branch feature-wmm
+    double inclination = 68.2; // See branch feature-wmm
     wmm_compensate(dataPoint, gravity, declination, inclination);
 
     // Calibrate generated data points (example)
