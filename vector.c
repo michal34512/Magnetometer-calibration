@@ -19,6 +19,14 @@ Vector vec_from_array(const double *array, unsigned int size) {
     return res;
 }
 
+Vector vec_copy(Vector vecA) {
+    Vector res = vec_new(vecA->size);
+    for (int i = 0; i < vecA->size; i++) {
+        VEC_ELEM(res, i) = VEC_ELEM(vecA, i);
+    }
+    return res;
+}
+
 Vector vec_copy_subvec(Vector vecA, unsigned int felem, unsigned int elems) {
     assert(vecA->size >= felem + elems);
     Vector res = vec_new(elems);
@@ -49,6 +57,18 @@ double vec_dot_product(Vector vecA, Vector vecB) {
     }
     return res;
 }
+
+Vector vec_cross_product(Vector vecA, Vector vecB) {
+    assert(vecA->size == 3 && vecB->size == 3);
+    Vector res = vec_new(3);
+
+    VEC_ELEM(res, 0) = VEC_ELEM(vecA, 1) * VEC_ELEM(vecB, 2) - VEC_ELEM(vecA, 2) * VEC_ELEM(vecB, 1);
+    VEC_ELEM(res, 1) = VEC_ELEM(vecA, 2) * VEC_ELEM(vecB, 0) - VEC_ELEM(vecA, 0) * VEC_ELEM(vecB, 2);
+    VEC_ELEM(res, 2) = VEC_ELEM(vecA, 0) * VEC_ELEM(vecB, 1) - VEC_ELEM(vecA, 1) * VEC_ELEM(vecB, 0);
+
+    return res;
+}
+
 void vec_multiply_scalar(Vector vecA, double val) {
     for (int i = 0; i < vecA->size; i++) {
         VEC_ELEM(vecA, i) *= val;

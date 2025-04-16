@@ -18,12 +18,14 @@ typedef struct {
 
 Vector vec_new(unsigned int size);
 Vector vec_from_array(const double *array, unsigned int size);
+Vector vec_copy(Vector vecA);
 Vector vec_copy_subvec(Vector vecA, unsigned int felem, unsigned int elems);
 void vec_replace(Vector vecA, Vector vecB);
 
 void vec_fill(Vector vecA, double val);
 
 double vec_dot_product(Vector vecA, Vector vecB);
+Vector vec_cross_product(Vector vecA, Vector vecB);
 void vec_multiply_scalar(Vector vecA, double val);
 void vec_add(Vector vecA, Vector vecB);
 void vec_sub(Vector vecA, Vector vecB);

@@ -452,6 +452,7 @@ void mat_free(Matrix matA) {
     if (matA == NULL) return;
     free(matA->data);
     free(matA);
+    matA = NULL;
 }
 
 void mat_from_array_free(Matrix matA) {

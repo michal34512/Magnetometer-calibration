@@ -7,6 +7,7 @@
 #include "eigen.h"
 #include "ellipsoid_fit.h"
 #include "sensor_calibration.h"
+#include "wmm_compensation.h"
 
 #include "math.h"
 
