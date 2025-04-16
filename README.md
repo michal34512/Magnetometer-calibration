@@ -53,3 +53,15 @@ Average chance of algorithm failure in relation to data point count (random mag.
 Example of data calibration with 50% noise:
 ![image](https://github.com/michal34512/Magnetometer-calibration/assets/136522993/9752cadd-9f7c-496e-8559-d9e351b3e218)
 
+# WMM
+The World Magnetic Model (WMM) describes the Earth's magnetic field and is used to convert magnetometer readings from magnetic north to true north.
+Why compensate?
+
+Magnetometers measure the Earth's field plus local distortions. Even after calibration, the result still points to magnetic north.
+WMM compensation adjusts for this by accounting for magnetic declination, enabling accurate heading and navigation.
+
+# Performance on Real Sensor Data
+The magnetometer was calibrated using an ellipsoid fit (50 data points) along with World Magnetic Model (WMM) compensation:
+![calibrated_magnetometer](https://github.com/user-attachments/assets/554a7ecc-4ba9-43fa-b41c-98db4c79f680)
+The gravity vector was assumed to be constant at [0, 0, -1], as the sensor was only rotated around the Z-axis.
+(Note: Normally, you would use an accelerometer to determine the gravity vector.)
