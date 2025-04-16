@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "geometry.h"
+#include "wmm/geomag.h"
 
 // THIS A DEMO OF MAGNETOMETER CALIBRATION. DEMO CONSISTS OF:
 // 1. Generating random mangetometer data (which you would normally read from the sensor)
@@ -108,12 +109,22 @@ int main() {
     calib_calibrate_point(calib, dataPoint);
 
     // Additional - compensate magnetic declination and inclination
+    double altitude  = 0;
+    double longitude = 16.951;
+    double latitude = 52.402;
+    double year = 2025.5; // June 2025
+    static int maxdeg = 12;
+    double declination = 0;
+    double inclination = 0;
+    double ti = 0, gv = 0;
+    geomag(&maxdeg);
+    geomg1(altitude, latitude, longitude, year, &declination, &inclination, &ti, &gv); // Get declination and inclination from official world magnetic model
+    printf("Declination: %f inclination : %f\n\r", declination, inclination);
+
     Vector gravity = vec_new(3);
     VEC_X(gravity) = 0;
     VEC_Y(gravity) = 0;
     VEC_Z(gravity) = 1;
-    double declination = 5.9;
-    double inclination = 68.2;
     wmm_compensate(dataPoint, gravity, declination, inclination);
 
     // Calibrate generated data points (example)
